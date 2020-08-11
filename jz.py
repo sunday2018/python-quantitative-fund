@@ -24,7 +24,7 @@ def get_html(code, start_date, end_date, page=1, per=20):
 	return html
 
 
-def get_fund(code, start_date, end_date, page=1, per=20):
+def get_fund(code, start_date, end_date, page=1, per=10):
 	# 获取html
 	html = get_html(code, start_date, end_date, page, per)
 	soup = BeautifulSoup(html, 'html.parser')
@@ -32,6 +32,12 @@ def get_fund(code, start_date, end_date, page=1, per=20):
 	pattern = re.compile('pages:(.*),')
 	result = re.search(pattern, html).group(1)
 	total_page = int(result)
+	print(total_page)
+	# 获取记录总条数
+	records_pattern = re.compile('records:(.*),')
+	records_res = re.search("records:(.*),pages", html).group(1)
+	records = int(records_res)
+	# print(records)
 	# 获取表头信息
 	heads = []
 	for head in soup.findAll("th"):
@@ -70,6 +76,8 @@ def get_fund(code, start_date, end_date, page=1, per=20):
 
 
 	# 按日期排序
+	print('日期：', fund_df['净值日期'], '\n')
+	fund_df['日期'] = pd.to_datetime(fund_df['净值日期'], format='%Y/%m/%d')
 	fund_df['净值日期'] = pd.to_datetime(fund_df['净值日期'], format='%Y/%m/%d')
 	fund_df = fund_df.sort_values(by='净值日期', axis=0, ascending=True).reset_index(drop=True)
 	fund_df = fund_df.set_index('净值日期')
@@ -83,9 +91,12 @@ def get_fund(code, start_date, end_date, page=1, per=20):
 
 
 if __name__ == '__main__':
-	fund_df = get_fund('159905', start_date='2020-02-01', end_date='2020-06-30')
+	fund_df = get_fund('159905', start_date='2020-07-01', end_date='2020-07-30')
 	print(fund_df)
 	fig, axes = plt.subplots(nrows=2, ncols=1)
-	fund_df[['单位净值', '累计净值']].plot(ax=axes[0])
+	fund_df[['单位净值','累计净值']].plot(ax=axes[0])
 	fund_df['日增长率'].plot(ax=axes[1])
+	#fund_df['单位净值'].plot(grid=True, label='单位净值')
+	#fund_df['累计净值'].plot(label='累计净值')
+	plt.legend() # 显示图例
 	plt.show()
