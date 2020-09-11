@@ -19,4 +19,4 @@
 
 # 净值估值表（初步计划）
 
-![样式一](净值估值样式一.png)
+![样式一](https://github.com/sunday2018/myMarkdownImage/blob/master/%E5%87%80%E5%80%BC%E4%BC%B0%E5%80%BC%E6%A0%B7%E5%BC%8F%E4%B8%80.png)
