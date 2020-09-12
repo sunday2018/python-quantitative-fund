@@ -14,14 +14,11 @@ import numpy as np
 import statistics
 
 
-
-
 if __name__ == '__main__':
 
-	# code = 510900
-	code = 510880
+	code = '510900'
 
-	csv_file = '%s_lsjz_sort.csv' % code
+	csv_file = './data/%s_lsjz_sort.csv' % code
 	csv_file_handle = open(csv_file,'r',encoding='utf-8')
 
 	# 组织净值列表
@@ -38,7 +35,7 @@ if __name__ == '__main__':
 	avg = np.mean(lsjz_list) # 平均值
 	bzc = np.std(lsjz_list, ddof=1) # 标准差
 	median_val = np.median(lsjz_list) # 中位数
-	print('varage:%s' % round(avg,4))
+	print('平均值:%s' % round(avg,4))
 	print('标准差：%s' % round(bzc))
 	print('中位数：%s' % median_val)
 	print('len:%s' % len(lsjz_list))
@@ -62,16 +59,12 @@ if __name__ == '__main__':
 	# 划分五等份，计算步长
 	buchang = int(round(len(new_list)/5, 0))
 	print('buchang:%s' % buchang)
-	# print('[%s, %s, %s, %s]' % (buchang, buchang*2, buchang*3, buchang*4))
-	# tmp_list = new_list[::buchang]
-	# tmp_list.append(max(new_list))
-	# print(tmp_list)
 
-	# 极低
+	# 较低
 	index_1 = 0
 	index_2 = buchang
 
-	#较低
+	# 低
 	index_3 = buchang+1
 	index_4 = buchang*2
 
@@ -79,10 +72,11 @@ if __name__ == '__main__':
 	index_5 = buchang*2 + 1
 	index_6 = buchang*3
 
+	# 高
 	index_7 = buchang*3 + 1
 	index_8 = buchang * 4
 
-	# 极高
+	# 较高
 	index_9 = buchang*4 + 1
 	index_10 = len(new_list) - 1
 

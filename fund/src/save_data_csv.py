@@ -1,3 +1,7 @@
+# /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 '''
  初始化脚本:
  1. 全量抓取基金净值
@@ -13,22 +17,6 @@ import time
 import random
 import csv
 from lib.mylog import Logger
-
-
-fundcode = '510880'
-
-def get_fundcode():
-    '''
-    获取fundcode列表
-    :return: 将获取的DataFrame以csv格式存入本地
-    '''
-    url = 'http://fund.eastmoney.com/js/fundcode_search.js'
-    r = requests.get(url)
-    cont = re.findall('var r = (.*])', r.text)[0]  # 提取list
-    ls = json.loads(cont)  # 将字符串个事的list转化为list格式
-    fundcode = pd.DataFrame(ls, columns=['fundcode', 'fundsx', 'name', 'category', 'fundpy'])  # list转为DataFrame
-    fundcode = fundcode.loc[:, ['fundcode', 'name', 'category']]
-    fundcode.to_csv('./fundcode.csv', index=False)
 
 
 def get_one_page(fundcode, pageIndex=1):
@@ -91,7 +79,7 @@ def main(fundcode):
     lsjz = info['lsjz']
     new_lsjz = pd.DataFrame(lsjz, columns=['FSRQ', 'DWJZ', 'LJJZ', 'JZZZL', 'SGZT', 'SHZT', 'FHSP'])
     # print(new_lsjz)
-    new_lsjz.to_csv('./%s_lsjz.csv' % fundcode, index=False, encoding='utf-8')  # 将基金历史净值以csv格式储存
+    new_lsjz.to_csv('./data/%s_lsjz.csv' % fundcode, index=False, encoding='utf-8')  # 将基金历史净值以csv格式储存
     page = 1
     while page < total_page:
         page += 1
@@ -102,14 +90,13 @@ def main(fundcode):
             break
         lsjz = info['lsjz']
         new_lsjz = pd.DataFrame(lsjz, columns=['FSRQ', 'DWJZ', 'LJJZ', 'JZZZL', 'SGZT', 'SHZT', 'FHSP'])
-        new_lsjz.to_csv('./%s_lsjz.csv' % fundcode, mode='a', index=False, header=False, encoding='utf-8')  # 追加存储
+        new_lsjz.to_csv('./data/%s_lsjz.csv' % fundcode, mode='a', index=False, header=False, encoding='utf-8')  # 追加存储
         time.sleep(random.randint(5, 10))
 
 
 if __name__=='__main__':
-    # 获取所有基金代码
-    # get_fundcode()
-    fundcode = '512070'
+    
+    fundcode = '510900'
     main(fundcode)
     '''
     fundcodes = pd.read_csv('./fundcode.csv', converters={'fundcode': str})
