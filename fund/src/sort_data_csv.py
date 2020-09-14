@@ -1,8 +1,5 @@
-'''
-格式化脚本
-1. 按日期正序排列，去掉无用信息
-2. 文件名形如：510880_lsjz_sort.csv
-'''
+# /usr/bin/env python
+# -*- coding: utf-8 -*-
 
 
 import csv
@@ -10,7 +7,14 @@ import sys
 from operator import itemgetter
 
 
-code = '510900'
+'''
+数据清洗
+
+1. 按日期正序排列，去掉无用信息
+2. 文件名形如：510880_lsjz_sort.csv
+'''
+
+code = '510050'
 csv_file = './data/%s_lsjz.csv' % code
 sort_csv_file = './data/%s_lsjz_sort.csv' % code
 print(csv_file)

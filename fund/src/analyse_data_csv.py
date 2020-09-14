@@ -1,22 +1,23 @@
 # /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-'''
-净值分析：
-参考值：最大值、最小值、平均值、中位数、众数
-区间划分：四分位
-波动：标准差
-'''
-
 import csv
 import numpy as np
 import statistics
 
 
+'''
+净值分析
+
+参考值：最大值、最小值、平均值、中位数、众数
+区间划分：五分位
+波动：标准差
+'''
+
+
 if __name__ == '__main__':
 
-	code = '510900'
+	code = '510050'
 
 	csv_file = './data/%s_lsjz_sort.csv' % code
 	csv_file_handle = open(csv_file,'r',encoding='utf-8')

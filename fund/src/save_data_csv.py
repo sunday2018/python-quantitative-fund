@@ -1,13 +1,6 @@
 # /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-'''
- 初始化脚本:
- 1. 全量抓取基金净值
- 2. 文件名形如：510880_lsjz.csv
-'''
-
 import requests
 import json
 import re
@@ -16,7 +9,14 @@ import math
 import time
 import random
 import csv
-from lib.mylog import Logger
+
+
+'''
+ 全量抓取
+
+ 1. 全量抓取基金净值
+ 2. 文件名形如：510880_lsjz.csv
+'''
 
 
 def get_one_page(fundcode, pageIndex=1):
@@ -94,15 +94,8 @@ def main(fundcode):
         time.sleep(random.randint(5, 10))
 
 
+
 if __name__=='__main__':
     
-    fundcode = '510900'
+    fundcode = '510050'
     main(fundcode)
-    '''
-    fundcodes = pd.read_csv('./fundcode.csv', converters={'fundcode': str})
-    # 获取所有基金净值数据
-    for fundcode in fundcodes['fundcode']:
-        print(fundcode)
-        main(fundcode)
-        time.sleep(random.randint(5, 10))
-    '''
